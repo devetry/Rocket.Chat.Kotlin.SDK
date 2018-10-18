@@ -253,6 +253,7 @@ internal fun RocketChatClient.combineRemoved(rooms: List<Removed>?, subscription
 
 internal suspend fun RocketChatClient.listSubscriptions(timestamp: Long = 0): RestMultiResult<List<Subscription>, List<Removed>> {
     val urlBuilder = requestUrl(restUrl, "subscriptions.get")
+    var calendar = CalendarISO8601Converter()
     val date = CalendarISO8601Converter().fromTimestamp(timestamp)
     urlBuilder.addQueryParameter("updatedSince", date)
 
