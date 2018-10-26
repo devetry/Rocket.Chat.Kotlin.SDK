@@ -297,14 +297,16 @@ suspend fun RocketChatClient.messages(
     offset: Long,
     count: Long
 ): PagedResult<List<Message>> = withContext(CommonPool) {
+    val myParams = "?roomId=${roomId}&offset=${offset.toString()}&count=${count.toString()}&query=%7B%22t%22%3A%7B%22%24nin%22%3A%5B%22uj%22%2C%22ul%22%2C%22ua%22%2C%22ur%22%2C%22um%22%2C%22uu%22%5D%7D%7D"
     val httpUrl = requestUrl(
         restUrl,
-        getRestApiMethodNameByRoomType(roomType, "messages")
+        getRestApiMethodNameByRoomType(roomType, "messages${myParams}")
     )
-        .addQueryParameter("roomId", roomId)
-        .addQueryParameter("offset", offset.toString())
-        .addQueryParameter("count", count.toString())
-        .build()
+//        .addQueryParameter("roomId", roomId)
+//        .addQueryParameter("offset", offset.toString())
+//        .addQueryParameter("count", count.toString())
+//            .addQueryParameter("query", "%7B%22t%22%3A%7B%22%24nin%22%3A%5B%22uj%22%2C%22ul%22%2C%22ua%22%2C%22ur%22%2C%22um%22%2C%22uu%22%5D%7D%7D")
+            .build()
 
     val request = requestBuilderForAuthenticatedMethods(httpUrl).get().build()
 
